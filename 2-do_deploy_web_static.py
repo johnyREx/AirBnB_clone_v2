@@ -28,7 +28,12 @@ def do_pack():
 
 
 def do_replay(archive_path):
-    archived_file = archive_path[9:]
+    """
+        Distribute archive
+    """
+
+    if os.path.exists(archive_path):
+        archived_file = archive_path[9:]
         newest_version = "/data/web_static/releases/" + archived_file[:-4]
         archived_file = "/tmp/" + archived_file
         put(archive_path, "/tmp/")
