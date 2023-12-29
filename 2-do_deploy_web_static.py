@@ -47,7 +47,14 @@ def do_deploy(archive_path):
         run("sudo rm -rf /data/web_static/current")
         run("sudo ln -s {} /data/web_static/current".format(newest_version))
 
+        # check HTTP status
+        result = run("curl -s -o /dev/null -w '%{http_code}' http://{}/hbnb_static/0-index.html".format(env.hosts[0]))
+
+    if result == "200":
         print("New version deployed!")
         return True
+    else:
+        print("Failed to deploy. HTTP Status Code: {}".format(result))
+        return False
 
     return False
